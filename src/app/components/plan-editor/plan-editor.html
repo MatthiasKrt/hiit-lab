@@ -54,6 +54,9 @@
                 <i class="pi pi-hourglass text-xs"></i>
                 {{ block.duration }}s
               </p>
+              @if (block.instruction) {
+                <p class="text-xs text-slate-400 mt-1 truncate">{{ block.instruction }}</p>
+              }
             </div>
             <div class="flex items-center gap-1">
               <button 
