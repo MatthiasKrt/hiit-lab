@@ -30,4 +30,17 @@ export class SidebarComponent {
       this.planService.deletePlan(id);
     }
   }
+
+  async onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      try {
+        await this.planService.importPlan(input.files[0]);
+        // Reset input
+        input.value = '';
+      } catch (error) {
+        alert('Failed to import plan. Please check the file format.');
+      }
+    }
+  }
 }

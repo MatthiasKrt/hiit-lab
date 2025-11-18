@@ -86,4 +86,39 @@ export class PlanService {
       exs.map(e => e.id === updatedExercise.id ? updatedExercise : e)
     );
   }
+
+  exportPlan(plan: Plan) {
+    const dataStr = JSON.stringify(plan, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${plan.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.json`;
+    a.click();
+    
+    window.URL.revokeObjectURL(url);
+  }
+
+  async importPlan(file: File): Promise<void> {
+    try {
+      const text = await file.text();
+      const plan = JSON.parse(text) as Plan;
+      
+      // Basic validation
+      if (!plan.name || !Array.isArray(plan.blocks)) {
+        throw new Error('Invalid plan format');
+      }
+
+      // Generate new ID to avoid conflicts
+      plan.id = crypto.randomUUID();
+      
+      // Add to plans
+      this.plansSignal.update(plans => [...plans, plan]);
+      this.selectPlan(plan.id);
+    } catch (error) {
+      console.error('Failed to import plan:', error);
+      throw error;
+    }
+  }
 }

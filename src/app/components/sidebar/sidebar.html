@@ -1,9 +1,25 @@
 <div class="flex flex-col h-full">
   <div class="p-4 border-b border-slate-200 flex justify-between items-center">
     <h2 class="font-bold text-lg">My Plans</h2>
-    <button (click)="createNewPlan()" class="p-2 rounded hover:bg-slate-100 text-blue-600">
-      <i class="pi pi-plus"></i>
-    </button>
+    <div class="flex gap-2">
+      <input 
+        #fileInput
+        type="file" 
+        accept=".json" 
+        class="hidden"
+        (change)="onFileSelected($event)"
+      >
+      <button 
+        (click)="fileInput.click()" 
+        class="p-2 rounded hover:bg-slate-100 text-slate-600"
+        title="Import Plan"
+      >
+        <i class="pi pi-upload"></i>
+      </button>
+      <button (click)="createNewPlan()" class="p-2 rounded hover:bg-slate-100 text-blue-600" title="New Plan">
+        <i class="pi pi-plus"></i>
+      </button>
+    </div>
   </div>
   
   <div class="flex-1 overflow-y-auto p-2 space-y-1">

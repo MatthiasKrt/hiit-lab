@@ -6,11 +6,15 @@ import { PlanService } from '../../services/plan.service';
 import { Block, Exercise } from '../../models/hiit-data.model';
 import { ExerciseLibraryComponent } from '../exercise-library/exercise-library';
 import { BlockDialogComponent } from '../block-dialog/block-dialog';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-plan-editor',
   standalone: true,
-  imports: [CommonModule, DragDropModule, ExerciseLibraryComponent, BlockDialogComponent],
+  imports: [CommonModule, DragDropModule, FormsModule, ExerciseLibraryComponent, BlockDialogComponent, DialogModule, ButtonModule, InputTextModule],
   templateUrl: './plan-editor.html',
   styleUrl: './plan-editor.css'
 })
@@ -21,6 +25,41 @@ export class PlanEditorComponent {
 
   blockDialogVisible = false;
   selectedBlock: Block | null = null;
+
+  // Name editing state
+  isEditingName = false;
+  editedName = '';
+  nameDialogVisible = false;
+
+  startEditingName() {
+    const plan = this.currentPlan();
+    if (plan) {
+      this.isEditingName = true;
+      this.editedName = plan.name;
+    }
+  }
+
+  saveName() {
+    const plan = this.currentPlan();
+    if (plan && this.editedName.trim()) {
+      this.planService.updatePlan({ ...plan, name: this.editedName.trim() });
+      this.isEditingName = false;
+      this.nameDialogVisible = false;
+    }
+  }
+
+  cancelEdit() {
+    this.isEditingName = false;
+    this.nameDialogVisible = false;
+  }
+
+  openNameDialog() {
+    const plan = this.currentPlan();
+    if (plan) {
+      this.editedName = plan.name;
+      this.nameDialogVisible = true;
+    }
+  }
 
   drop(event: CdkDragDrop<Block[]>) {
     if (event.previousContainer === event.container) {
@@ -134,6 +173,13 @@ export class PlanEditorComponent {
     const plan = this.currentPlan();
     if (plan) {
       this.router.navigate(['/run', plan.id]);
+    }
+  }
+
+  exportPlan() {
+    const plan = this.currentPlan();
+    if (plan) {
+      this.planService.exportPlan(plan);
     }
   }
 }

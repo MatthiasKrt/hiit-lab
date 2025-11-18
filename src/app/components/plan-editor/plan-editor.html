@@ -4,10 +4,35 @@
     @if (currentPlan(); as plan) {
       <div class="mb-6 flex justify-between items-start">
         <div>
-          <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-            <i class="pi pi-calendar text-blue-600"></i>
-            {{ plan.name }}
-          </h1>
+          <div class="flex items-center gap-2">
+            @if (isEditingName) {
+              <input 
+                type="text" 
+                [(ngModel)]="editedName" 
+                (blur)="saveName()" 
+                (keydown.enter)="saveName()"
+                (keydown.escape)="cancelEdit()"
+                class="text-2xl font-bold text-slate-800 border-b-2 border-blue-500 focus:outline-none bg-transparent"
+                autoFocus
+              >
+            } @else {
+              <h1 
+                class="text-2xl font-bold text-slate-800 flex items-center gap-2 cursor-pointer hover:bg-slate-100 rounded px-2 -ml-2 transition-colors"
+                (dblclick)="startEditingName()"
+                title="Double click to edit name"
+              >
+                <i class="pi pi-calendar text-blue-600"></i>
+                {{ plan.name }}
+              </h1>
+            }
+            <button 
+              (click)="openNameDialog()"
+              class="text-slate-400 hover:text-blue-500 p-1 rounded-full hover:bg-slate-100 transition-colors"
+              title="Edit Name"
+            >
+              <i class="pi pi-pencil"></i>
+            </button>
+          </div>
           <div class="flex items-center gap-4 mt-2 text-slate-500">
             <span class="flex items-center gap-1">
               <i class="pi pi-list"></i>
@@ -19,13 +44,23 @@
             </span>
           </div>
         </div>
-        <button 
-          (click)="runPlan()"
-          class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 shadow-sm transition-colors"
-        >
-          <i class="pi pi-play"></i>
-          Run Training
-        </button>
+        <div class="flex gap-2">
+          <button 
+            (click)="exportPlan()"
+            class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg flex items-center gap-2 shadow-sm transition-colors"
+            title="Export Plan"
+          >
+            <i class="pi pi-download"></i>
+            Export
+          </button>
+          <button 
+            (click)="runPlan()"
+            class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 shadow-sm transition-colors"
+          >
+            <i class="pi pi-play"></i>
+            Run Training
+          </button>
+        </div>
       </div>
 
       <div 
@@ -108,4 +143,31 @@
     [connectedTo]="['planList']"
     (itemDoubleClicked)="addBlockFromLibrary($event)"
   ></app-exercise-library>
+
+  <!-- Name Edit Dialog -->
+  <p-dialog 
+    [(visible)]="nameDialogVisible" 
+    header="Edit Plan Name" 
+    [modal]="true" 
+    [style]="{ width: '400px' }"
+    (onHide)="cancelEdit()"
+  >
+    <div class="flex flex-col gap-4 pt-4">
+      <div class="flex flex-col gap-2">
+        <label for="planName" class="font-semibold">Name</label>
+        <input 
+          pInputText 
+          id="planName" 
+          [(ngModel)]="editedName" 
+          (keydown.enter)="saveName()"
+          class="w-full" 
+          autofocus 
+        />
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button label="Cancel" icon="pi pi-times" (click)="cancelEdit()" styleClass="p-button-text"></p-button>
+      <p-button label="Save" icon="pi pi-check" (click)="saveName()"></p-button>
+    </ng-template>
+  </p-dialog>
 </div>
