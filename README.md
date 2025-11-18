@@ -1,59 +1,44 @@
-# HiitPlanner
+# 🏋️ HIIT Planner
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.10.
+> Web application for planning High-Intensity Interval Training workouts.
 
-## Development server
+## 🚀 Overview
 
-To start a local development server, run:
+**HIIT Planner** is a web application built with Angular that allows users to design HIIT workouts. It provides a drag-and-drop interface for structuring sessions, including Tabata and custom circuits.
 
-```bash
-ng serve
-```
+## ✨ Key Features
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **📋 Workout Builder**: Drag and drop interface for creating routines.
+- **⏱️ Timers**: Configuration for work, rest, and cool-down periods.
+- **📚 Exercise Library**: Collection of exercises with notes and media.
+- **🎨 UI**: Interface built with PrimeNG and Tailwind CSS.
 
-## Code scaffolding
+## 🛠️ Tech Stack
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **[Angular](https://angular.io/)**: Platform for building web applications.
+- **[PrimeNG](https://primeng.org/)**: UI component library for Angular.
+- **[Tailwind CSS](https://tailwindcss.com/)**: Utility-first CSS framework.
 
-```bash
-ng generate component component-name
-```
+## 🏁 Getting Started
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Follow these steps to set up the development environment:
 
-```bash
-ng generate --help
-```
+1.  **Clone the repository**
+    ```bash
+    git clone <repository-url>
+    ```
 
-## Building
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-To build the project run:
+3.  **Start the development server**
+    ```bash
+    ng serve
+    ```
 
-```bash
-ng build
-```
+4.  **Open your browser**
+    Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
