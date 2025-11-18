@@ -1,0 +1,37 @@
+<div class="runner-container" *ngIf="currentPlan() as plan">
+  <div class="header">
+    <button class="back-btn" routerLink="/">✕</button>
+    <h2>{{ plan.name }}</h2>
+    <div class="progress">Block {{ currentBlockIndex() + 1 }} / {{ totalBlocks() }}</div>
+  </div>
+
+  <div class="main-content" *ngIf="currentBlock() as block">
+
+
+    <div class="info-section">
+      <div class="time-display">
+        {{ timeLeft() }}
+      </div>
+
+      <div class="current-block">
+        <div class="block-type">{{ block.type | uppercase }}</div>
+        <h1 class="block-name">{{ block.name || (block.type === 'exercise' ? 'Exercise' : 'Rest') }}</h1>
+        <p class="instruction" *ngIf="block.instruction">{{ block.instruction }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="next-preview" *ngIf="nextBlock() as next">
+      <span class="label">NEXT:</span>
+      <span class="value">{{ next.name || next.type }} ({{ next.duration }}s)</span>
+    </div>
+
+    <div class="controls">
+      <button class="btn-control" *ngIf="!isRunning()" (click)="start()">START</button>
+      <button class="btn-control" *ngIf="isRunning()" (click)="togglePause()">
+        {{ isPaused() ? 'RESUME' : 'PAUSE' }}
+      </button>
+    </div>
+  </div>
+</div>

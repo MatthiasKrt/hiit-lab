@@ -5,7 +5,7 @@ import { PlanEditorComponent } from './components/plan-editor/plan-editor';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SidebarComponent, PlanEditorComponent],
+  imports: [RouterOutlet, SidebarComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

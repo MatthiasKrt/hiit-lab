@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { PlanService } from '../../services/plan.service';
@@ -14,6 +15,7 @@ import { BlockDialogComponent } from '../block-dialog/block-dialog';
   styleUrl: './plan-editor.css'
 })
 export class PlanEditorComponent {
+  private router = inject(Router);
   private planService = inject(PlanService);
   currentPlan = this.planService.currentPlan;
 
@@ -126,5 +128,12 @@ export class PlanEditorComponent {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
     return `${m}:${s.toString().padStart(2, '0')}`;
+  }
+
+  runPlan() {
+    const plan = this.currentPlan();
+    if (plan) {
+      this.router.navigate(['/run', plan.id]);
+    }
   }
 }
