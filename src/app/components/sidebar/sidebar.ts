@@ -1,11 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { PlanService } from '../../services/plan.service';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, DialogModule, ButtonModule, InputTextModule],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css'
 })
@@ -14,20 +18,39 @@ export class SidebarComponent {
   plans = this.planService.plans;
   currentPlan = this.planService.currentPlan;
 
+  // Dialog state
+  createDialogVisible = false;
+  newPlanName = '';
+  
+  deleteDialogVisible = false;
+  planToDeleteId: string | null = null;
+
   selectPlan(id: string) {
     this.planService.selectPlan(id);
   }
 
   createNewPlan() {
-    const name = prompt('Enter plan name:');
-    if (name) {
-      this.planService.addPlan(name);
+    this.newPlanName = '';
+    this.createDialogVisible = true;
+  }
+
+  saveNewPlan() {
+    if (this.newPlanName.trim()) {
+      this.planService.addPlan(this.newPlanName.trim());
+      this.createDialogVisible = false;
     }
   }
 
   deletePlan(id: string) {
-    if (confirm('Are you sure you want to delete this plan?')) {
-      this.planService.deletePlan(id);
+    this.planToDeleteId = id;
+    this.deleteDialogVisible = true;
+  }
+
+  confirmDelete() {
+    if (this.planToDeleteId) {
+      this.planService.deletePlan(this.planToDeleteId);
+      this.deleteDialogVisible = false;
+      this.planToDeleteId = null;
     }
   }
 
