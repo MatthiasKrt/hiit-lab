@@ -1,0 +1,32 @@
+<div class="flex flex-col h-full">
+  <div class="p-4 border-b border-slate-200 flex justify-between items-center">
+    <h2 class="font-bold text-lg">My Plans</h2>
+    <button (click)="createNewPlan()" class="p-2 rounded hover:bg-slate-100 text-blue-600">
+      <i class="pi pi-plus"></i>
+    </button>
+  </div>
+  
+  <div class="flex-1 overflow-y-auto p-2 space-y-1">
+    @for (plan of plans(); track plan.id) {
+      <div 
+        class="p-3 rounded cursor-pointer transition-colors flex items-center gap-2 group justify-between"
+        [class.bg-blue-50]="currentPlan()?.id === plan.id"
+        [class.text-blue-700]="currentPlan()?.id === plan.id"
+        [class.hover:bg-slate-50]="currentPlan()?.id !== plan.id"
+        (click)="selectPlan(plan.id)"
+      >
+        <div class="flex items-center gap-2 truncate">
+          <i class="pi pi-file text-slate-400"></i>
+          <span class="truncate">{{ plan.name }}</span>
+        </div>
+        <button 
+          (click)="$event.stopPropagation(); deletePlan(plan.id)" 
+          class="text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1"
+          title="Delete Plan"
+        >
+          <i class="pi pi-trash"></i>
+        </button>
+      </div>
+    }
+  </div>
+</div>

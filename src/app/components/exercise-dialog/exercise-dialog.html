@@ -1,0 +1,40 @@
+<p-dialog 
+  [(visible)]="visible" 
+  [header]="exercise ? 'Edit Exercise' : 'New Exercise'" 
+  [modal]="true" 
+  [style]="{ width: '450px' }"
+  (onHide)="onCancel()"
+>
+  <div class="flex flex-col gap-4 pt-4">
+    <div class="flex flex-col gap-2">
+      <label for="name" class="font-semibold">Name</label>
+      <input pInputText id="name" [(ngModel)]="name" class="w-full" autofocus />
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="defaultDuration" class="font-semibold">Default Duration (seconds)</label>
+      <p-inputNumber 
+        id="defaultDuration" 
+        [(ngModel)]="defaultDuration" 
+        [min]="1" 
+        [showButtons]="true" 
+        buttonLayout="horizontal" 
+        decrementButtonClass="p-button-secondary" 
+        incrementButtonClass="p-button-secondary" 
+        incrementButtonIcon="pi pi-plus" 
+        decrementButtonIcon="pi pi-minus"
+        class="w-full"
+      ></p-inputNumber>
+    </div>
+    
+    <div class="flex flex-col gap-2">
+      <label for="instruction" class="font-semibold">Instruction</label>
+      <textarea pInputTextarea id="instruction" [(ngModel)]="instruction" rows="3" class="w-full"></textarea>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" icon="pi pi-times" (click)="onCancel()" styleClass="p-button-text"></p-button>
+    <p-button label="Save" icon="pi pi-check" (click)="onSave()" [disabled]="!name"></p-button>
+  </ng-template>
+</p-dialog>
