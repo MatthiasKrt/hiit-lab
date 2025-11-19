@@ -25,7 +25,7 @@ Follow these steps to set up the development environment:
 
 1.  **Clone the repository**
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/MatthiasKrt/hiit-lab.git
     ```
 
 2.  **Install dependencies**
